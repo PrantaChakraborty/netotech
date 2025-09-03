@@ -1,0 +1,8 @@
+Generic single-database configuration.
+
+```bash
+alembic revision --autogenerate -m "Add Chemical model"
+alembic upgrade head
+```
+
+
