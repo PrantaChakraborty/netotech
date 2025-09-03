@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.chemical import router as chemical_router
+
 
 app = FastAPI()
 origins = [
@@ -15,7 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(chemical_router.router)
 @app.get("/")
 async def root():
-    return {"message": "Hello Bigger Applications!"}
+    return {"message": "Neotech Assignment"}
 
