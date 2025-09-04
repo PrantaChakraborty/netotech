@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.chemical import router as chemical_router
+from src.database import get_db
 from src.exceptions import register_exception_handlers
 
 app = FastAPI()
@@ -24,3 +27,16 @@ app.include_router(chemical_router.router)
 @app.get("/")
 async def root():
   return {"message": "Neotech Assignment"}
+
+
+@app.get(
+  "/health",
+)
+async def health(db: AsyncSession = Depends(get_db)):
+  try:
+    # Simple DB check
+    result = await db.execute(text("SELECT 1"))
+    _ = result.scalar()
+    return {"status": "ok", "database": "reachable"}
+  except Exception as e:
+    return {"status": "error", "database": str(e)}
