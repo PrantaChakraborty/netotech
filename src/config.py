@@ -1,5 +1,7 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 def _find_env_file() -> Path | None:
   """
@@ -12,6 +14,7 @@ def _find_env_file() -> Path | None:
     if candidate.exists():
       return candidate
   return None
+
 
 class Settings(BaseSettings):
   # Database settings
@@ -30,9 +33,9 @@ class Settings(BaseSettings):
 
   # ... existing code ...
   model_config = SettingsConfigDict(
-    env_file=_find_env_file(),
-    env_file_encoding="utf-8"
+    env_file=_find_env_file(), env_file_encoding="utf-8"
   )
+
 
 # ... existing code ...
 settings = Settings()
