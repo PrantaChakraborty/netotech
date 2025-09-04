@@ -1,7 +1,8 @@
-from pathlib import Path
-from pydantic import  Field, field_validator
-from pydantic_settings import SettingsConfigDict, BaseSettings
 import os
+from pathlib import Path
+
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 def _find_env_file() -> Path | None:
@@ -28,9 +29,7 @@ class Settings(BaseSettings):
   DEBUG: bool = False
 
   model_config = SettingsConfigDict(
-    env_file=_find_env_file(),
-    env_file_encoding="utf-8",
-    extra="ignore"
+    env_file=_find_env_file(), env_file_encoding="utf-8", extra="ignore"
   )
 
   @field_validator("DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", mode="before")
