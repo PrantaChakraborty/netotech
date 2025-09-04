@@ -12,6 +12,8 @@ if config.config_file_name is not None:
 
 from src.database import Base
 
+from src.chemical.models import Chemical, InventoryLog
+
 target_metadata = Base.metadata
 
 config.set_main_option("sqlalchemy.url", SQL_ALCHEMY_DB_URL)
